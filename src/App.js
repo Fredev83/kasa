@@ -1,23 +1,25 @@
-import logo from './logo.svg';
-import './App.css';
+import { Routes, Route } from "react-router-dom";
+import Home from "./pages/Home/Home";
+import About from "./pages/About/About";
+import Header from "./components/Header/Header";
+import Logement from "./pages/Logement/Logement";
+import Footer from "./components/Footer/Footer";
+import Error from "./pages/Error/Error.js";
 
-function App() {
+const App = () => {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <h1>
-          Hello world welcome !
-        </h1>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Header />
+      <main>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/logement/:id" element={<Logement />} />
+          {/*path="*" fonctionne si jamais l'url ne correspond Ã  rien de dÃ©clarÃ© au dessus*/}
+          <Route path="*" element={<Error />} />
+        </Routes>
+      </main>
+      <Footer />
     </div>
   );
 }
