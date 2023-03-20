@@ -1,39 +1,95 @@
-import { useState, useRef, useEffect } from "react"; //import des hooks de base react
-import Chevron from "../../assets/images/vectorBas.svg";
+.collapse {
+    width: 100%;
+    margin: 20px 0;
 
-export default function Collapse(props) {
-    const [toggle, setToggle] = useState(false); // je definie le state du toggle (et false par défaut)
-    const [heightEl, setHeightEl] = useState(); // je definie le state de la hauteur du collapse
+    @media screen and (min-width: $breakpoint-desktop) {
+        margin: 31px auto 0;
+    }
 
-    const toggleState = () => {
-        //je définie la fonction toggleState qui modifie la valeur toggle au clic
-        setToggle(!toggle);
-    };
+    &__visible {
+        background: $primary-color;
+        color: $tertiary-color;
+        cursor: pointer;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        height: 30px;
+        padding: 7px 15px;
+        border-radius: 5px;
+        width: 100%;
 
-    const refHeight = useRef(); //récupère et conserve la valeur de hauteur du collapse déplié
+        @media screen and (min-width: $breakpoint-desktop) {
+            height: 47px;
+        }
 
-    useEffect(() => {
-        setHeightEl(`${refHeight.current.scrollHeight}px`); //useEffect s'éxécute au montage du composant, dans ce cas, il définit la hauteur du collapse déplié lors de sa première ouverture et la conserve dans refHeight
-    }, []);
+        h2 {
+            @include font(13px, 500);
 
-    return (
-        // affiche le collapse replié par défaut et l'ouvre au clic puis le referme au clic en faisant disparaitre le texte et le style
-        <div className={`collapse ${props.aboutStyle}`}>
-            <div onClick={toggleState} className="collapse__visible">
-                <h2>{props.aboutTitle}</h2>
-                <img
-                    className={toggle ? "chevron rotated" : "chevron"}
-                    src={Chevron}
-                    alt="chevron"
-                />
-            </div>
-            <div
-                ref={refHeight}
-                className={toggle ? "collapse__toggle animated" : "collapse__toggle"}
-                style={{ height: toggle ? `${heightEl}` : "0px" }}
-            >
-                <p aria-hidden={toggle ? "true" : "false"}>{props.aboutText}</p>
-            </div>
-        </div>
-    );
+            @media screen and (min-width: $breakpoint-desktop) {
+                @include font(24px, 500);
+            }
+        }
+    }
+
+    &__toggle {
+        opacity: 0;
+        color: $primary-color;
+        background: $secondary-color;
+        border-radius: 5px;
+        transition: opacity 0.4s ease-in-out, height 0.4s 0.4s ease-in-out;
+
+        p {
+            margin: 0;
+            padding: 22px 15px;
+            pointer-events: none;
+            @include font(12px, 400);
+
+            @media screen and (min-width: $breakpoint-desktop) {
+                @include font(24px, 400);
+            }
+        }
+    }
+}
+
+.animated {
+    opacity: 1;
+    transition: height 0.4s ease-in-out, opacity 0.4s 0.4s ease-in-out;
+}
+
+.chevron {
+    width: 9px;
+    transform: rotate(0deg);
+    transition: 0.4s 0.4s ease-in-out;
+
+    @media screen and (min-width: $breakpoint-desktop) {
+        width: 15px;
+    }
+}
+
+.rotated {
+    transform: rotate(180deg);
+    transition: 0.4s ease-in-out;
+}
+
+.about-style {
+    width: 100%;
+    @include flex-column;
+
+    @media screen and (min-width: $breakpoint-desktop) {
+        width: 87.5%;
+    }
+}
+
+.collapse-fiche-container {
+    @include flex-column;
+    width: 100%;
+
+    @media screen and (min-width: $breakpoint-desktop) {
+        flex-direction: row;
+        gap: 6%;
+    }
+}
+
+.equipList {
+    list-style-type: none;
 }
